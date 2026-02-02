@@ -7,12 +7,13 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/devdb
       SPRING_DATASOURCE_USERNAME: dev
       SPRING_DATASOURCE_PASSWORD: dev
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
       JWT_SECRET: 8xS7vK9mP2nQ4wR5tY6uI7oP8aS9dF0gH1jK2lZ3xC4vB5nM6qW7eR8tY9uI0oP1aS2dF3gH4jK5lZ6xC7vB8nM9qW0eR1tY2u==
       JWT_EXPIRATION: 86400000
       JWT_COOKIENAME: token
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - app-network
 
