@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "ufind",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

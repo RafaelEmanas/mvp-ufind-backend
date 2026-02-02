@@ -1,0 +1,16 @@
+meta {
+  name: logout user
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/api/auth/logout
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
