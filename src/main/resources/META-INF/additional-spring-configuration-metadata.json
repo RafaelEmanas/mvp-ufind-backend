@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "jwt.secret",
+    "type": "java.lang.String",
+    "description": "The field where the jwt token secret will be placed."
+  },
+  {
+    "name": "jwt.expiration",
+    "type": "java.lang.String",
+    "description": "The field which defines the jwt expiration in milliseconds.'"
+  },
+  {
+    "name": "jwt.cookie-name",
+    "type": "java.lang.String",
+    "description": "The field which defines the jwt token's cookie name.'"
+  }
+]}

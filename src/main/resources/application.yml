@@ -29,6 +29,3 @@ jwt:
 logging:
   level:
     root: INFO
-    org.flywaydb: DEBUG 
-    org.hibernate.tool.schema: DEBUG
-    org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: ERROR
