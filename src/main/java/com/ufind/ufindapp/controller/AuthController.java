@@ -2,7 +2,7 @@ package com.ufind.ufindapp.controller;
 
 import com.ufind.ufindapp.dto.LoginRequest;
 import com.ufind.ufindapp.dto.LoginDTO;
-import com.ufind.ufindapp.dto.RegisterRequest;
+import com.ufind.ufindapp.dto.RegisterUserRequest;
 import com.ufind.ufindapp.security.JwtProperties;
 import com.ufind.ufindapp.service.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,7 +34,7 @@ public class AuthController {
     public ResponseEntity<Void> register(
         @Valid
         @RequestBody
-        RegisterRequest request
+        RegisterUserRequest request
     ) {
         authService.register(request);
         return ResponseEntity.status(201).build();

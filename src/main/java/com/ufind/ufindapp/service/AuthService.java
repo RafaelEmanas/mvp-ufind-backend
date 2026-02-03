@@ -2,7 +2,7 @@ package com.ufind.ufindapp.service;
 
 import com.ufind.ufindapp.dto.LoginRequest;
 import com.ufind.ufindapp.dto.LoginDTO;
-import com.ufind.ufindapp.dto.RegisterRequest;
+import com.ufind.ufindapp.dto.RegisterUserRequest;
 import com.ufind.ufindapp.entity.User;
 import com.ufind.ufindapp.entity.UserRole;
 import com.ufind.ufindapp.exception.InvalidRoleException;
@@ -52,7 +52,7 @@ public class AuthService {
         }
     }
 
-    public void register(RegisterRequest request) {
+    public void register(RegisterUserRequest request) {
 
         UserRole role;
         try {
