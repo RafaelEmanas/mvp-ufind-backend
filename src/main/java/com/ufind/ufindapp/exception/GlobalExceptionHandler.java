@@ -19,4 +19,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleBadCredentials(BadCredentialsException ex) {
         return ResponseEntity.status(401).body(Map.of("error", ex.getMessage()));
     }
+
+    @ExceptionHandler(InvalidRoleException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidRoleException(InvalidRoleException ex) {
+        return ResponseEntity.status(401).body(Map.of("error", ex.getMessage()));
+    }
 }

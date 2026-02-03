@@ -1,7 +1,7 @@
 package com.ufind.ufindapp.controller;
 
-import com.ufind.ufindapp.dto.AuthRequest;
-import com.ufind.ufindapp.dto.AuthResponse;
+import com.ufind.ufindapp.dto.LoginRequest;
+import com.ufind.ufindapp.dto.LoginDTO;
 import com.ufind.ufindapp.dto.RegisterRequest;
 import com.ufind.ufindapp.security.JwtProperties;
 import com.ufind.ufindapp.service.AuthService;
@@ -9,13 +9,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -30,21 +30,24 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(
-            @Valid @RequestBody RegisterRequest request,
-            HttpServletResponse response) {
-        AuthResponse authResponse = authService.register(request);
-        addTokenCookie(response, authResponse.token());
-        return ResponseEntity.ok(Map.of("success", true));
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> register(
+        @Valid
+        @RequestBody
+        RegisterRequest request
+    ) {
+        authService.register(request);
+        return ResponseEntity.status(201).build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(
-            @Valid @RequestBody AuthRequest request,
-            HttpServletResponse response) {
-        AuthResponse authResponse = authService.login(request);
+    public ResponseEntity<Void> login(
+        @Valid @RequestBody LoginRequest request,
+        HttpServletResponse response
+    ) {
+        LoginDTO authResponse = authService.login(request);
         addTokenCookie(response, authResponse.token());
-        return ResponseEntity.ok(Map.of("success", true));
+        return ResponseEntity.status(200).build();
     }
 
     @PostMapping("/logout")
