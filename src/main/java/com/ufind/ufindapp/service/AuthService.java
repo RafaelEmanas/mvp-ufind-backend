@@ -68,11 +68,10 @@ public class AuthService {
                 .role(role)
                 .build();
 
-        try {
-            userRepository.save(newUser);
-        } catch (DataIntegrityViolationException e) {
+        if (userRepository.existsByEmail(newUser.getEmail())) {
             throw new UserAlreadyExistsException("This user already exists.");
         }
-
+        userRepository.save(newUser);
+                
     }
 }
