@@ -24,4 +24,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleInvalidRoleException(InvalidRoleException ex) {
         return ResponseEntity.status(401).body(Map.of("error", ex.getMessage()));
     }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleItemNotFoundException(ItemNotFoundException ex){
+        return ResponseEntity.status(404).body(Map.of("error", ex.getMessage()));
+    }
+
 }
