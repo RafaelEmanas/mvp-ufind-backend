@@ -60,16 +60,17 @@ public class AuthService {
             throw new InvalidRoleException("Invalid role " + request.role());
         }
 
+        if (userRepository.existsByEmail(request.email())) {
+            throw new UserAlreadyExistsException("This user already exists.");
+        }
+
         User newUser = User.builder()
                 .username(request.username())
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .role(role)
                 .build();
-
-        if (userRepository.existsByEmail(newUser.getEmail())) {
-            throw new UserAlreadyExistsException("This user already exists.");
-        }
+        
         userRepository.save(newUser);
                 
     }
