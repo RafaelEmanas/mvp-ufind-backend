@@ -1,0 +1,22 @@
+meta {
+  name: mark item as claimed
+  type: http
+  seq: 5
+}
+
+patch {
+  url: http://localhost:8080/api/item
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "id": "59ff73c1-4724-4ae2-ac36-c6d665ee72ff"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

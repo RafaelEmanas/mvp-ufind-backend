@@ -1,0 +1,28 @@
+meta {
+  name: register item
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:8080/api/item
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title": "Dede do Vasco",
+    "description": "Dede do Vasco",
+    "dateFound": "2026-02-01",
+    "locationFound": "Computer Science Building - Room 204",
+    "imageUrl": "https://a.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0515%2Fr370803_1062x598_16%2D9.jpg&w=570&format=jpg",
+    "contactInfo": "92918536112"
+  }
+  
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
