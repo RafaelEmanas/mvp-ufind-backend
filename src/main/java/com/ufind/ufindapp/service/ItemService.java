@@ -7,8 +7,11 @@ import com.ufind.ufindapp.entity.ItemStatus;
 import com.ufind.ufindapp.exception.ItemNotFoundException;
 import com.ufind.ufindapp.repository.ItemRepository;
 
-import org.springframework.transaction.annotation.Transactional;
+import java.util.UUID;
 
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +21,19 @@ public class ItemService {
 
     public ItemService(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
+    }
+
+    public Page<Item> getAllItems(Pageable pageable) {
+        return itemRepository.findAll(pageable);
+    }
+
+    public Item getItemById(UUID id) {
+        return itemRepository.findById(id)
+            .orElseThrow(() -> new ItemNotFoundException("Item not found with id: "+id));
+    }
+
+    public Page<Item> searchItems(String query, Pageable pageable) {
+        return itemRepository.searchItems(query, pageable);
     }
 
     public void registerItem(RegisterItemRequest request) {
@@ -45,7 +61,5 @@ public class ItemService {
         item.setStatus(ItemStatus.CLAIMED);
 
     }
-
-    
 
 }
