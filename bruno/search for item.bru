@@ -1,0 +1,20 @@
+meta {
+  name: search for item
+  type: http
+  seq: 8
+}
+
+get {
+  url: http://localhost:8080/api/item/search?query=dede
+  body: none
+  auth: inherit
+}
+
+params:query {
+  query: dede
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
