@@ -19,6 +19,10 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -102,6 +106,21 @@ class ItemServiceTest {
         assertThat(alreadyClaimedItem.getStatus()).isEqualTo(ItemStatus.CLAIMED);
     }
 
+    @Test
+    void getItemByIdWhenItemExistsReturnsItem() {
+        UUID id = UUID.randomUUID();
+        Item item = new Item();
+        item.setId(id);
+        
+        when(itemRepository.findById(id)).thenReturn(Optional.of(item));
+        
+        Item result = itemService.getItemById(id);
+        
+        assertNotNull(result);
+        assertEquals(id, result.getId());
+    }
+
+
     // ===== Error Cases =====
 
     @Test
@@ -142,6 +161,16 @@ class ItemServiceTest {
         // availableItem should remain unchanged since it was never retrieved
         assertThat(availableItem.getStatus()).isEqualTo(ItemStatus.AVAILABLE);
     }
+
+    @Test
+    void getItemByIdWhenItemNotFoundThrowsException() {
+        UUID id = UUID.randomUUID();
+        
+        when(itemRepository.findById(id)).thenReturn(Optional.empty());
+        
+        assertThrows(ItemNotFoundException.class, () -> itemService.getItemById(id));
+    }
+
 
     // ===== Transactional Behavior =====
 
