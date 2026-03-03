@@ -3,18 +3,19 @@ package com.ufind.ufindapp.service;
 import com.ufind.ufindapp.dto.LoginRequest;
 import com.ufind.ufindapp.dto.LoginDTO;
 import com.ufind.ufindapp.dto.RegisterUserRequest;
+import com.ufind.ufindapp.dto.UserInfoDTO;
 import com.ufind.ufindapp.entity.User;
 import com.ufind.ufindapp.entity.UserRole;
 import com.ufind.ufindapp.exception.InvalidRoleException;
 import com.ufind.ufindapp.exception.UserAlreadyExistsException;
 import com.ufind.ufindapp.repository.UserRepository;
 import com.ufind.ufindapp.security.JwtService;
+import com.ufind.ufindapp.security.UserPrincipal;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +44,10 @@ public class AuthService {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.email(), request.password()));
-            UserDetails principal = (UserDetails) authentication.getPrincipal();
+            UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
             String token = jwtService.generateToken(principal);
-            return new LoginDTO(token);
+            UserInfoDTO userInfo = new UserInfoDTO(principal.getId(), principal.getRole());
+            return new LoginDTO(token, userInfo);
         } catch (BadCredentialsException e) {
             throw new BadCredentialsException("Bad Credentials.");
         }

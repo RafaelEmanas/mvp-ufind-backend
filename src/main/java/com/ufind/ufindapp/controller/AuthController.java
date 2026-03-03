@@ -3,7 +3,7 @@ package com.ufind.ufindapp.controller;
 import com.ufind.ufindapp.dto.LoginRequest;
 import com.ufind.ufindapp.dto.LoginDTO;
 import com.ufind.ufindapp.dto.RegisterUserRequest;
-import com.ufind.ufindapp.dto.UserMeDTO;
+import com.ufind.ufindapp.dto.UserInfoDTO;
 import com.ufind.ufindapp.security.JwtProperties;
 import com.ufind.ufindapp.security.UserPrincipal;
 import com.ufind.ufindapp.service.AuthService;
@@ -45,13 +45,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(
+    public ResponseEntity<LoginDTO> login(
         @Valid @RequestBody LoginRequest request,
         HttpServletResponse response
     ) {
         LoginDTO authResponse = authService.login(request);
         addTokenCookie(response, authResponse.token());
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(200).body(authResponse);
     }
 
     @PostMapping("/logout")
@@ -61,9 +61,9 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserMeDTO> getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
-        UserMeDTO userMeDTO = new UserMeDTO(userPrincipal.getId(), userPrincipal.getRole());
-        return ResponseEntity.ok(userMeDTO);
+    public ResponseEntity<UserInfoDTO> getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        UserInfoDTO userInfoDTO = new UserInfoDTO(userPrincipal.getId(), userPrincipal.getRole());
+        return ResponseEntity.ok(userInfoDTO);
     }
 
     private void addTokenCookie(HttpServletResponse response, String token) {
