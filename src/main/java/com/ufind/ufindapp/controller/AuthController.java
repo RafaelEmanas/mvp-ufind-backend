@@ -3,13 +3,17 @@ package com.ufind.ufindapp.controller;
 import com.ufind.ufindapp.dto.LoginRequest;
 import com.ufind.ufindapp.dto.LoginDTO;
 import com.ufind.ufindapp.dto.RegisterUserRequest;
+import com.ufind.ufindapp.dto.UserMeDTO;
 import com.ufind.ufindapp.security.JwtProperties;
+import com.ufind.ufindapp.security.UserPrincipal;
 import com.ufind.ufindapp.service.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +58,12 @@ public class AuthController {
     public ResponseEntity<Void> logout(HttpServletResponse response) {
         clearTokenCookie(response);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserMeDTO> getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        UserMeDTO userMeDTO = new UserMeDTO(userPrincipal.getId(), userPrincipal.getRole());
+        return ResponseEntity.ok(userMeDTO);
     }
 
     private void addTokenCookie(HttpServletResponse response, String token) {

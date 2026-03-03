@@ -32,10 +32,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         Collection<? extends GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(roleWithPrefix));
 
-        // Use email as the username identifier for Spring Security
-        return new org.springframework.security.core.userdetails.User(
+        // Return custom UserPrincipal with id and role
+        return new UserPrincipal(
+                user.getId(),
                 user.getEmail(),
                 user.getPassword(),
+                user.getRole(),
                 authorities);
     }
 }

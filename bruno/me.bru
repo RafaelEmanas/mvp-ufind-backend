@@ -1,0 +1,16 @@
+meta {
+  name: /me
+  type: http
+  seq: 9
+}
+
+get {
+  url: http://localhost:8080/api/auth/me
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
