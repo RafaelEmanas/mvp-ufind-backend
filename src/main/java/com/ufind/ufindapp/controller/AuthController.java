@@ -45,13 +45,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginDTO> login(
+    public ResponseEntity<UserInfoDTO> login(
         @Valid @RequestBody LoginRequest request,
         HttpServletResponse response
     ) {
         LoginDTO authResponse = authService.login(request);
         addTokenCookie(response, authResponse.token());
-        return ResponseEntity.status(200).body(authResponse);
+        return ResponseEntity.status(200).body(authResponse.user());
     }
 
     @PostMapping("/logout")
