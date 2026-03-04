@@ -50,6 +50,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers(
                             HttpMethod.GET,
+                            "/api/auth/me",
                             "/api/items/**"
                         ).permitAll()
                         // everything else requires authentication
