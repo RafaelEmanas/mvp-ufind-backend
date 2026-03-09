@@ -32,6 +32,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(404).body(Map.of("error", ex.getMessage()));
     }
 
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<Map<String, String>> handleUnauthorizedException(UnauthorizedException ex) {
+        return ResponseEntity.status(401).body(Map.of("error", ex.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleValidationException(
             MethodArgumentNotValidException ex) {

@@ -6,6 +6,7 @@ import com.ufind.ufindapp.dto.RegisterUserRequest;
 import com.ufind.ufindapp.dto.UserInfoDTO;
 import com.ufind.ufindapp.security.JwtProperties;
 import com.ufind.ufindapp.security.UserPrincipal;
+import com.ufind.ufindapp.exception.UnauthorizedException;
 import com.ufind.ufindapp.service.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -62,6 +63,9 @@ public class AuthController {
 
     @GetMapping("/me")
     public ResponseEntity<UserInfoDTO> getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        if (userPrincipal == null) {
+            throw new UnauthorizedException("User not authenticated");
+        }
         UserInfoDTO userInfoDTO = new UserInfoDTO(userPrincipal.getId(), userPrincipal.getRole());
         return ResponseEntity.ok(userInfoDTO);
     }
