@@ -9,10 +9,10 @@ import java.time.LocalDate;
 public record RegisterItemRequest(
     @NotBlank String title,
     @NotBlank String description,
-    @NotNull LocalDate dateFound,
+    @NotBlank LocalDate dateFound,
     @NotBlank String locationFound,
     ItemStatus status,
-    String imageUrl,
+    @NotBlank String imageUrl,
     String contactInfo
 ) {
     
