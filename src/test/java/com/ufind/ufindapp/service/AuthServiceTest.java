@@ -8,7 +8,6 @@ import com.ufind.ufindapp.entity.UserRole;
 import com.ufind.ufindapp.exception.InvalidRoleException;
 import com.ufind.ufindapp.exception.UserAlreadyExistsException;
 import com.ufind.ufindapp.repository.UserRepository;
-import com.ufind.ufindapp.security.JwtService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

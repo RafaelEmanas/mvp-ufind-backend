@@ -1,10 +1,10 @@
 package com.ufind.ufindapp.controller;
 
 import com.ufind.ufindapp.dto.LoginRequest;
+import com.ufind.ufindapp.config.JwtProperties;
 import com.ufind.ufindapp.dto.LoginDTO;
 import com.ufind.ufindapp.dto.RegisterUserRequest;
 import com.ufind.ufindapp.dto.UserInfoDTO;
-import com.ufind.ufindapp.security.JwtProperties;
 import com.ufind.ufindapp.security.UserPrincipal;
 import com.ufind.ufindapp.exception.UnauthorizedException;
 import com.ufind.ufindapp.service.AuthService;

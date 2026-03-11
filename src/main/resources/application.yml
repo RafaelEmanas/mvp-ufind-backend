@@ -1,17 +1,7 @@
 spring:
   application:
     name: ufind-backend
-  
-  datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-    
-  jpa:
-    hibernate:
-      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
-    show-sql: true
-  
+
   flyway:
     enabled: true
     baseline-on-migrate: true
@@ -20,15 +10,6 @@ spring:
 
 server:
   port: 8080
-
-jwt:
-  secret: ${JWT_SECRET}
-  expiration: ${JWT_EXPIRATION}
-  cookie-name: ${JWT_COOKIENAME}
-
-logging:
-  level:
-    root: INFO
 
 springdoc:
   api-docs:

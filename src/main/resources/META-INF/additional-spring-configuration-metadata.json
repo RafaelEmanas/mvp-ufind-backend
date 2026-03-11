@@ -7,11 +7,36 @@
   {
     "name": "jwt.expiration",
     "type": "java.lang.String",
-    "description": "The field which defines the jwt expiration in milliseconds.'"
+    "description": "The field which defines the jwt expiration in milliseconds."
   },
   {
     "name": "jwt.cookie-name",
     "type": "java.lang.String",
-    "description": "The field which defines the jwt token's cookie name.'"
+    "description": "The field which defines the jwt token's cookie name."
+  },
+  {
+    "name": "cloudflare.r2.endpoint",
+    "type": "java.lang.String",
+    "description": "The R2/S3-compatible storage endpoint URL."
+  },
+  {
+    "name": "cloudflare.r2.access-key-id",
+    "type": "java.lang.String",
+    "description": "Access key for R2 authentication."
+  },
+  {
+    "name": "cloudflare.r2.secret-access-key",
+    "type": "java.lang.String",
+    "description": "Secret key for R2 authentication."
+  },
+  {
+    "name": "cloudflare.r2.bucket-name",
+    "type": "java.lang.String",
+    "description": "The target R2 bucket name."
+  },
+  {
+    "name": "cloudflare.r2.region",
+    "type": "java.lang.String",
+    "description": "Region — use 'auto' for prod R2, 'us-east-1' for LocalStack."
   }
 ]}

@@ -9,7 +9,6 @@ import com.ufind.ufindapp.entity.UserRole;
 import com.ufind.ufindapp.exception.InvalidRoleException;
 import com.ufind.ufindapp.exception.UserAlreadyExistsException;
 import com.ufind.ufindapp.repository.UserRepository;
-import com.ufind.ufindapp.security.JwtService;
 import com.ufind.ufindapp.security.UserPrincipal;
 
 import org.springframework.security.authentication.AuthenticationManager;
