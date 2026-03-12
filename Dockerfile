@@ -27,5 +27,7 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 # ── Stage 4: development image (hot reload via spring-boot:run) ───────────
 FROM deps AS development
 COPY src ./src
-EXPOSE 8080
-ENTRYPOINT ["mvn", "spring-boot:run", "-Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]
+EXPOSE 8080 5005
+ENTRYPOINT ["mvn", "spring-boot:run", \
+  "-Dspring-boot.run.fork=false", \
+  "-Dspring-boot.run.jvmArguments=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]
