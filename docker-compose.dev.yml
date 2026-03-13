@@ -17,8 +17,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      localstack:
-        condition: service_healthy
+      rustfs-init:
+        condition: service_completed_successfully
     networks:
       - app-network
 
@@ -38,24 +38,47 @@ services:
     networks:
       - app-network
 
-  localstack:
-    image: localstack/localstack:s3-latest
+  rustfs:
+    image: rustfs/rustfs:latest
     ports:
-      - "4566:4566"
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      RUSTFS_ACCESS_KEY: ${RUSTFS_ACCESS_KEY:-rustfsadmin}
+      RUSTFS_SECRET_KEY: ${RUSTFS_SECRET_KEY:-rustfsadmin}
+      RUSTFS_CONSOLE_ENABLE: "true"
     volumes:
-      - localstack-data:/var/lib/localstack
-      - ./localstack-init:/etc/localstack/init/ready.d
+      - rustfs-data:/data
+    command: --console-enable /data
     healthcheck:
-      test: ["CMD","curl","-f","http://localhost:4566/_localstack/init/ready"]
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:9000/health"]
       interval: 5s
       timeout: 5s
       retries: 10
     networks:
       - app-network
 
+  rustfs-init:
+    image: amazon/aws-cli
+    depends_on:
+      rustfs:
+        condition: service_healthy
+    environment:
+      AWS_ACCESS_KEY_ID: ${RUSTFS_ACCESS_KEY:-rustfsadmin}
+      AWS_SECRET_ACCESS_KEY: ${RUSTFS_SECRET_KEY:-rustfsadmin}
+      AWS_DEFAULT_REGION: us-east-1
+      BUCKET_NAME: ${CLOUDFLARE_R2_BUCKET_NAME:-ufind-dev}
+    entrypoint: >
+      /bin/sh -c "
+        aws --endpoint-url=http://rustfs:9000 s3 mb s3://$$BUCKET_NAME --region us-east-1 || true;
+        echo \"Bucket $$BUCKET_NAME ready\";
+      "
+    networks:
+      - app-network
+
 volumes:
   postgres-data-local:
-  localstack-data:
+  rustfs-data:
   maven-repo:
 
 networks:

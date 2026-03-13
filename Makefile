@@ -2,12 +2,17 @@
 #  ufind-backend — environment management
 # ============================================================
 
+include .env.dev
+export
+
+
 DEV_COMPOSE  = docker compose -f docker-compose.dev.yml
 PROD_COMPOSE = docker compose -f docker-compose.prod.yml
 
-# AWS CLI flags for talking to LocalStack from the host machine
-AWSLOCAL = AWS_ACCESS_KEY_ID=test AWS_SECRET_ACCESS_KEY=test AWS_DEFAULT_REGION=us-east-1 \
-           aws --endpoint-url=http://localhost:4566
+AWSLOCAL = AWS_ACCESS_KEY_ID=$(RUSTFS_ACCESS_KEY) \
+           AWS_SECRET_ACCESS_KEY=$(RUSTFS_SECRET_KEY) \
+           AWS_DEFAULT_REGION=us-east-1 \
+           aws --endpoint-url=http://localhost:9000
 
 .DEFAULT_GOAL := help
 
@@ -36,10 +41,11 @@ help:
 	@echo "    make dev-psql     — open psql shell in the dev db container"
 	@echo "    make prod-psql    — open psql shell in the prod db container"
 	@echo ""
-	@echo "  LocalStack"
-	@echo "    make ls-buckets   — list buckets in LocalStack"
-	@echo "    make ls-files     — list files in the ufind-dev bucket"
-	@echo "    make ls-reset     — destroy and recreate LocalStack container"
+	@echo "  Storage (RustFS)"
+	@echo "    make s3-buckets   — list buckets in RustFS"
+	@echo "    make s3-files     — list files in the ufind-dev bucket"
+	@echo "    make s3-reset     — destroy and recreate RustFS containers"
+	@echo "    make s3-console   — print RustFS console URL"
 	@echo ""
 	@echo "  Cleanup"
 	@echo "    make clean-dev    — remove dev containers, volumes, and orphans"
@@ -104,19 +110,25 @@ dev-psql:
 prod-psql:
 	$(PROD_COMPOSE) exec db psql -U $${POSTGRES_USER} -d $${POSTGRES_DB}
 
-# ── localstack ───────────────────────────────────────────────
-.PHONY: ls-buckets
-ls-buckets:
+# ── storage (rustfs) ─────────────────────────────────────────
+.PHONY: s3-buckets
+s3-buckets:
 	$(AWSLOCAL) s3 ls
 
-.PHONY: ls-files
-ls-files:
+.PHONY: s3-files
+s3-files:
 	$(AWSLOCAL) s3 ls s3://ufind-dev
 
-.PHONY: ls-reset
-ls-reset:
-	$(DEV_COMPOSE) rm -sf localstack
-	$(DEV_COMPOSE) up -d localstack
+.PHONY: s3-reset
+s3-reset:
+	$(DEV_COMPOSE) rm -sf rustfs rustfs-init
+	$(DEV_COMPOSE) up -d rustfs rustfs-init
+
+.PHONY: s3-console
+s3-console:
+	@echo "RustFS console: http://localhost:9001"
+	@echo "  user:     test"
+	@echo "  password: testtest123"
 
 # ── cleanup ──────────────────────────────────────────────────
 .PHONY: clean-dev

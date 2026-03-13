@@ -1,4 +1,7 @@
-.env*
+.env.prod
+.env.local
+*.env
+!.env.dev
 !.env.example
 
 HELP.md
