@@ -27,7 +27,7 @@ public class S3Config {
             ))
             .region(Region.of(r2.getRegion()))
             .serviceConfiguration(S3Configuration.builder()
-                .pathStyleAccessEnabled(true)  // required for LocalStack and R2
+                .pathStyleAccessEnabled(true)
                 .build())
             .build();
     }
