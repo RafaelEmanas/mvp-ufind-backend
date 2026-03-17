@@ -28,6 +28,7 @@ jwt:
 
 cloudflare:
   r2:
+    public-url: ${CLOUDFLARE_R2_PUBLIC_URL}
     endpoint: ${CLOUDFLARE_R2_ENDPOINT}
     access-key-id: ${CLOUDFLARE_R2_ACCESS_KEY_ID}
     secret-access-key: ${CLOUDFLARE_R2_SECRET_ACCESS_KEY}

@@ -9,6 +9,7 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "cloudflare.r2")
 @Data
 public class R2Properties {
+    private String publicUrl;
     private String endpoint;
     private String accessKeyId;
     private String secretAccessKey;
