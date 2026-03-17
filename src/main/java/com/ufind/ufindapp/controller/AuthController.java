@@ -29,7 +29,10 @@ public class AuthController {
     private final AuthService authService;
     private final JwtProperties jwtProperties;
 
-    public AuthController(AuthService authService, JwtProperties jwtProperties) {
+    public AuthController(
+        AuthService authService,
+        JwtProperties jwtProperties
+    ) {
         this.authService = authService;
         this.jwtProperties = jwtProperties;
     }
@@ -47,7 +50,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<UserInfoDTO> login(
-        @Valid @RequestBody LoginRequest request,
+        @Valid
+        @RequestBody 
+        LoginRequest request,
         HttpServletResponse response
     ) {
         LoginDTO authResponse = authService.login(request);
