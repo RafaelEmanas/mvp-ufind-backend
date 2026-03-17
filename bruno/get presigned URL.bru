@@ -1,0 +1,20 @@
+meta {
+  name: get presigned URL
+  type: http
+  seq: 10
+}
+
+get {
+  url: http://localhost:8080/api/upload-url?contentType=image/jpeg
+  body: none
+  auth: inherit
+}
+
+params:query {
+  contentType: image/jpeg
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

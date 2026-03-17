@@ -1,0 +1,33 @@
+meta {
+  name: upload image w/ presigned URL
+  type: http
+  seq: 11
+}
+
+put {
+  url: http://localhost:9000/ufind-dev/2bc8fe08-2a93-4dbb-be2f-d25072f0dd8f.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20260317T225631Z&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Credential=rustfsadmin%2F20260317%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Expires=300&X-Amz-Signature=00179412ce76f672115ddd4f4d62fc8676f87cb60ed498dd1fef090d2f7c8c0d
+  body: file
+  auth: inherit
+}
+
+params:query {
+  X-Amz-Algorithm: AWS4-HMAC-SHA256
+  X-Amz-Date: 20260317T225631Z
+  X-Amz-SignedHeaders: content-type%3Bhost
+  X-Amz-Credential: rustfsadmin%2F20260317%2Fus-east-1%2Fs3%2Faws4_request
+  X-Amz-Expires: 300
+  X-Amz-Signature: 00179412ce76f672115ddd4f4d62fc8676f87cb60ed498dd1fef090d2f7c8c0d
+}
+
+headers {
+  Content-Type: image/jpeg
+}
+
+body:file {
+  file: @file(/home/emanas/.dotfiles/backgrounds/.config/backgrounds/bc46055a5c23d8eaa369752c52d9e1c0.jpg) @contentType(image/jpeg)
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}
