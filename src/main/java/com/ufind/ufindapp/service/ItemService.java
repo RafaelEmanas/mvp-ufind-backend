@@ -45,7 +45,9 @@ public class ItemService {
                 .locationFound(request.locationFound())
                 .status(request.status())
                 .imageUrl(request.imageUrl())
-                .contactInfo(request.contactInfo())
+                .finderName(request.finderName())
+                .finderEmail(request.finderEmail())
+                .finderCollegeId(request.finderCollegeId())
                 .build();
    
         itemRepository.save(newItem);
@@ -59,6 +61,9 @@ public class ItemService {
             .orElseThrow(() -> new ItemNotFoundException("The queried item wasn't found."));
 
         item.setStatus(ItemStatus.CLAIMED);
+        item.setClaimerName(request.claimerName());
+        item.setClaimerEmail(request.claimerEmail());
+        item.setClaimerCollegeId(request.claimerCollegeId());
 
     }
 
