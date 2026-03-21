@@ -46,8 +46,23 @@ public class Item {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name = "contact_info")
-    private String contactInfo;
+    @Column(name = "finder_name", nullable = false, length = 100)
+    private String finderName;
+
+    @Column(name = "finder_email", nullable = false, length = 150)
+    private String finderEmail;
+
+    @Column(name = "finder_college_id", nullable = false, length = 8)
+    private String finderCollegeId;
+
+    @Column(name = "claimer_name", length = 100)
+    private String claimerName;
+
+    @Column(name = "claimer_email", length = 150)
+    private String claimerEmail;
+
+    @Column(name = "claimer_college_id", length = 8)
+    private String claimerCollegeId;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
