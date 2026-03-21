@@ -41,7 +41,7 @@ class ItemServiceTest {
     @BeforeEach
     void setUp() {
         itemId = UUID.randomUUID();
-        request = new MarkItemClaimedRequest(itemId);
+        request = new MarkItemClaimedRequest(itemId, "John Doe", "john@icomp.ufam.edu.br", "12345678");
 
         availableItem = Item.builder()
                 .id(itemId)
@@ -50,7 +50,9 @@ class ItemServiceTest {
                 .dateFound(LocalDate.of(2026, 2, 5))
                 .locationFound("Central Library")
                 .status(ItemStatus.AVAILABLE)
-                .contactInfo("library@ufam.edu.br")
+                .finderName("Jane Smith")
+                .finderEmail("jane@icomp.ufam.edu.br")
+                .finderCollegeId("87654321")
                 .build();
     }
 
@@ -127,7 +129,7 @@ class ItemServiceTest {
     @DisplayName("Should throw ItemNotFoundException when item does not exist")
     void shouldThrowItemNotFoundExceptionWhenItemDoesNotExist() {
         UUID nonExistentId = UUID.randomUUID();
-        MarkItemClaimedRequest requestWithNonExistentId = new MarkItemClaimedRequest(nonExistentId);
+        MarkItemClaimedRequest requestWithNonExistentId = new MarkItemClaimedRequest(nonExistentId, "John Doe", "john@icomp.ufam.edu.br", "12345678");
         
         when(itemRepository.findById(nonExistentId)).thenReturn(Optional.empty());
 
